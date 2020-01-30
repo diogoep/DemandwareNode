@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+        <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" />
+    </head>
+    
+    <body>
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Active</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+          </ul>
+        <h1><%= title %></h1>
+        <ol>
+            <% _.each(items, function(topC) { %>
+            <li>
+                <h1><%= topC.name %></h1>
+                <p><%= topC.page_description %></p>
+                <div>
+                    <img src="/images/<%= (topC.image_groups[0].images[0].link)  %>">
+                </div>
+                <p>Price: <%= topC.currency %> 
+                    <% if(topC.master) { %>
+                        $<%= topC.master.price %>
+                    <% }else{ %>
+                        $<%= topC.price %>
+                    <% } %>
+                </p>  
+            </li>
+            <% }); %>
+        </ol>
+    </body>
+</html>
