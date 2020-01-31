@@ -45,6 +45,10 @@ app.get("/womens-clothing", routes.womensClothing);
 app.get("/womens-jewelry", routes.womensJewelry);
 app.get("/womens-accessories", routes.womensAccessories);
 app.get('/product/:id', routes.product);
+app.post('/createUserPost', routes.createUser);
+app.get('/createUser', routes.createUserForm);
+app.post('/loginPost', routes.login);
+app.get('/login', routes.loginForm);
 
 
 // Run server
