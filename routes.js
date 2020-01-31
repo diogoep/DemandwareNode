@@ -1,7 +1,7 @@
 
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
-var userSchema = require('./models/User.js');
+var userSchema = require('./schemas/User.js');
 var User = mongoose.model('User', userSchema);
 
 
@@ -12,6 +12,38 @@ exports.createUserForm = function (req, res) {
 		title: "Express"
 	});
 };
+
+
+exports.login = function (req, res) {
+	var _ = require('underscore');
+	var MongoClient = require('mongodb').MongoClient;
+	const uri =  'mongodb+srv://diogo:diogo@cluster0-4j82r.gcp.mongodb.net/test?retryWrites=true&w=majority';
+	const client = new MongoClient(uri, { useNewUrlParser: true });
+	client.connect((err, client) => {
+		var db = client.db('exercise');
+		var emailForm = req.body.email;
+		var passwordForm = req.body.password;
+		var query = { email: emailForm };
+		var collection = db.collection('users');
+		collection.find(query).toArray(function (err, items) {
+			if (items.length == 1) {
+				bcrypt.compare(passwordForm, items[0].password, function (err, result) {
+					if (result === true) {
+						req.session.userId = items[0]._id;
+						res.session = req.session;
+						res.redirect(302, '/mens');
+					} else {
+						res.redirect(302, '/mens');
+					}
+				})
+			}
+		});
+		client.close();
+
+	});
+};
+
+
 
 
 exports.logout = function (req, res) {
@@ -88,37 +120,6 @@ exports.profile = function (req, res) {
 		});
 	});
 };
-
-exports.login = function (req, res) {
-	var _ = require('underscore');
-	var MongoClient = require('mongodb').MongoClient;
-	const uri =  'mongodb+srv://diogo:diogo@cluster0-4j82r.gcp.mongodb.net/test?retryWrites=true&w=majority';
-	const client = new MongoClient(uri, { useNewUrlParser: true });
-	client.connect((err, client) => {
-		var db = client.db('exercise');
-		var emailForm = req.body.email;
-		var passwordForm = req.body.password;
-		var query = { email: emailForm };
-		var collection = db.collection('users');
-		collection.find(query).toArray(function (err, items) {
-			if (items.length == 1) {
-				bcrypt.compare(passwordForm, items[0].password, function (err, result) {
-					if (result === true) {
-						req.session.userId = items[0]._id;
-						res.session = req.session;
-						res.redirect(302, '/mens');
-					} else {
-						res.redirect(302, '/mens');
-					}
-				})
-			}
-		});
-		client.close();
-
-	});
-};
-
-
 
 
 exports.createUser = function (req, res) {
