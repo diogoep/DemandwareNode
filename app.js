@@ -37,18 +37,22 @@ if (app.get('env') === 'development') {
 }
 
 // App routes
-app.get("/"        , routes.index);
-app.get("/hello"   , routes.hello);
+app.get("/"        , routes.mens);
+app.get("/mens"   , routes.mens);
+app.get("/womens"   , routes.womens);
 app.get("/mens-clothing", routes.mensClothing);
 app.get("/mens-accessories", routes.mensAccessories);
 app.get("/womens-clothing", routes.womensClothing);
 app.get("/womens-jewelry", routes.womensJewelry);
 app.get("/womens-accessories", routes.womensAccessories);
 app.get('/product/:id', routes.product);
+app.get('/wishlist/:id', routes.update);
 app.post('/createUserPost', routes.createUser);
 app.get('/createUser', routes.createUserForm);
 app.post('/loginPost', routes.login);
 app.get('/login', routes.loginForm);
+app.get('/logout', routes.logout);
+app.get('/profile', routes.profile);
 
 
 // Run server

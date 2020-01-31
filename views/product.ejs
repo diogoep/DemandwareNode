@@ -2,40 +2,101 @@
 <html>
     <head>
         <title><%= title %></title>
-        <link rel="stylesheet" href="/stylesheets/style.css" />
-        <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" />
-    </head>
+        <link rel="stylesheet" href="/stylesheets/template.min.css" />
+      </head>
     
-    <body>
-        <ul class="nav nav-pills">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Active</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-          </ul>
-        <h1><%= title %></h1>
-        <ol>
-            <% _.each(items, function(topC) { %>
-            <li>
-                <h1><%= topC.name %></h1>
-                <p><%= topC.page_description %></p>
-                <div>
-                    <img src="/images/<%= (topC.image_groups[0].images[0].link)  %>">
-                </div>
-                <p>Price: <%= topC.currency %> 
-                    <% if(topC.master) { %>
-                        $<%= topC.master.price %>
-                    <% }else{ %>
-                        $<%= topC.price %>
-                    <% } %>
-                </p>  
-            </li>
-            <% }); %>
-        </ol>
-    </body>
+    <body id="page-top">
+         <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">Clothing Co.</a>
+      <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/womens">Womens Clothing</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/mens">Mens Clothing</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <% if(user){ %><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/logout">Logout</a>
+        </li><li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/profile">Profile</a>
+            <% }else{ %>
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">Login</a>
+              <% } %>
+
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <% _.each(items, function(topC) { %>
+  <!-- About Section -->
+  <section class="masthead bg-white text-secondary mb-0" id="about">
+    <div class="container">
+
+      <!-- About Section Heading -->
+      <h1 class="page-section-heading text-center text-uppercase text-secondary mb-0"><%= topC.name %></h1>
+
+    <br>
+    
+      <!-- About Section Content -->
+      <div class="row">
+        <div class="col-lg-6 text-center" >
+            <img src="/images/<%= (topC.image_groups[0].images[0].link)  %>">
+          </div>
+        <div class="col-lg-6 text-center" >
+          <p class="lead"><%= topC.long_description %></p>
+            <% _.each(topC.variation_attributes, function(variation){%>
+                <form>
+            <h2><%= variation.name %></h2>
+            <select class="form-control" id="exampleFormControlSelect1">
+            <% _.each(variation.values, function(variation_item){%>
+            <option>
+                <%= variation_item.name %>
+            </option>
+                <% }); %>
+            </select>
+                <% }); %>
+            </form>
+            <br> 
+            <p>Price: <%= topC.currency %> 
+                <% if(topC.master) { %>
+                    $<%= topC.master.price %>
+                <% }else{ %>
+                    $<%= topC.price %>
+                <% } %>
+            </p>
+            <!-- About Section Button -->
+     
+        <a class="btn btn-primary btn-outline-black" href="">
+          <i class="fas mr-0"></i>
+        Buy
+        </a>
+        <a class="btn btn-primary btn-outline-black" href="/wishlist/<%= topC.id %>">
+            <i class="fas mr-0"></i>
+          Add to Wishlist
+          </a>
+      </div>
+        </div>
+      </div>
+  </section>
+  <% }); %>  
+  </body>
+  <!-- Copyright Section -->
+  <section class="copyright py-4 text-center text-white">
+    <div class="container">
+      <small>Copyright OSF Global Services</small>
+    </div>
+  </section>
 </html>
+
+
+
+
