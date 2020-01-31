@@ -104,13 +104,11 @@ exports.mensAccessories = function(req, res) {
 		// Client returned
 		var db = client.db('exercise');
 	
-		if(err)
-    {
-        console.log(err);
-    }
-    else
-    {
-		console.log("Connected to db");}
+		if(err){
+        	console.log(err);
+    	}else{
+			console.log("Connected to db");
+		}
 		
 		var collection = db.collection('products');
 		//const collection = db.collection("categories");
@@ -147,14 +145,12 @@ exports.womensClothing = function(req, res) {
 	client.connect(  (err, client) => {
 		// Client returned
 		var db = client.db('exercise');
-	
-		if(err)
-    {
-        console.log(err);
-    }
-    else
-    {
-		console.log("Connected to db");}
+
+		if(err){
+        	console.log(err);
+    	}else{
+			console.log("Connected to db");
+		}
 		
 		var collection = db.collection('products');
 		//const collection = db.collection("categories");
@@ -235,13 +231,11 @@ exports.womensJewelry = function(req, res) {
 		// Client returned
 		var db = client.db('exercise');
 	
-		if(err)
-    {
-        console.log(err);
-    }
-    else
-    {
-		console.log("Connected to db");}
+		if(err){
+			console.log(err);
+		}else{
+			console.log("Connected to db");
+		}
 		
 		var collection = db.collection('products');
 		//const collection = db.collection("categories");
@@ -263,45 +257,43 @@ exports.womensJewelry = function(req, res) {
 	});
 };
 
-
-
-/*exports.index = function(req, res) {
-
-
-/*exports.index = function(req, res) {
-	res.render("index", { 
-		// Template data
-		title: "Express" 
-	});
-};
-
-
-exports.hello = function(req, res) {
-	var _         = require("underscore");
-	//var mdbClient = require('mongodb').MongoClient;
-	const MongoClient = require('mongodb').MongoClient;
-	const uri = "mongodb+srv://diogo:diogo@cluster0-4j82r.gcp.mongodb.net/exercise?retryWrites=true&w=majority"; 
+exports.product = function(req,res){
+	var pid = req.params.id;
+	var _         = require('underscore');
+	//require('bootstrap');
+	//require('jquery');
+	var MongoClient = require('mongodb').MongoClient;
+	const mdbClient = require('mongodb').MongoClient;
+	const uri = 'mongodb+srv://diogo:diogo@cluster0-4j82r.gcp.mongodb.net/test?retryWrites=true&w=majority';
+	//const uri = "mongodb://diogo:diogo@cluster0-4j82r.gcp.mongodb.net:27017/exercise";
+	//const uri = "mongodb://diogo:diogo@cluster0-shard-00-01-4j82r.gcp.mongodb.net:27017/exercise"; 
 	const client = new MongoClient(uri, { useNewUrlParser: true });
-	client.connect(err=>{
-		//var collection = db.collection('categories');
-		const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-
-	});/*
-		const collection = db.collection('categories');
-		collection.find().toArray(function(err, items) {
-			res.render("hello", { 
+	client.connect(  (err, client) => {
+		// Client returned
+		var db = client.db('exercise');
+	
+		if(err){
+			console.log(err);
+		}else{
+			console.log("Connected to db");
+		}
+		
+		var collection = db.collection('products');
+		//const collection = db.collection("categories");
+		var query = { id: pid };
+		//collection.find()
+		collection.find(query).toArray(function(err, items) {
+			res.render("product", { 
 				// Underscore.js lib
 				_     : _, 
 				
 				// Template data
 				title : "Hello World!",
 				items : items
+				//picture : items.find({'link':})
 			});
 
-		
+		client.close();
 		});
-		db.close();
-	});*/
-//};
+	});
+  };

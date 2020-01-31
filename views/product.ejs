@@ -22,12 +22,18 @@
         <ol>
             <% _.each(items, function(topC) { %>
             <li>
-                <h1><a href="/product/<%= topC.id %>"><%= topC.name %></a></h1>
+                <h1><%= topC.name %></h1>
                 <p><%= topC.page_description %></p>
                 <div>
                     <img src="/images/<%= (topC.image_groups[0].images[0].link)  %>">
                 </div>
-                <p>Price: <%= topC.currency %> $<%= topC.master.price %></p>  
+                <p>Price: <%= topC.currency %> 
+                    <% if(topC.master) { %>
+                        $<%= topC.master.price %>
+                    <% }else{ %>
+                        $<%= topC.price %>
+                    <% } %>
+                </p>  
             </li>
             <% }); %>
         </ol>

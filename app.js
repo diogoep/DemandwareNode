@@ -44,6 +44,7 @@ app.get("/mens-accessories", routes.mensAccessories);
 app.get("/womens-clothing", routes.womensClothing);
 app.get("/womens-jewelry", routes.womensJewelry);
 app.get("/womens-accessories", routes.womensAccessories);
+app.get('/product/:id', routes.product);
 
 
 // Run server
